@@ -1,1 +1,87 @@
-<p>Hello world</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 4</title>
+    <style type="text/css">
+        table, th, td {
+            border: 0.5px solid black;
+        }
+    </style>
+    <script type="text/javascript">  
+        function selects() {  
+            var ele=document.getElementsByName('chk');  
+            for(var i=0; i<ele.length; i++){  
+                if(ele[i].type=='checkbox')  
+                    ele[i].checked=true;  
+            }  
+        }         
+ 
+        function deSelect() {  
+                var ele=document.getElementsByName('chk');  
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='checkbox')  
+                        ele[i].checked=false;  
+                      
+                }  
+        }     
+
+        function reset() {
+            var ele=document.getElementsByName('field');
+            for(var i=0; i<ele.length; i++){
+                ele.value="";
+            }
+            deSelect()
+        }
+
+    </script>  
+</head>
+<body>
+    <form method="post" action="fake_server">
+        <table>
+            <tr>
+                <td>Street Name</td>
+                <td><input type="text" name="street_name" id="field"></td>
+            </tr>
+            <tr>
+                <td>Suburb</td>
+                <td><input type="text" name="suburb" id="field"></td>
+            </tr>
+            <tr>    
+                <td>Postcode</td>
+                <td><input type="text" name="postcode" id="field"></td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td><input type="text" name="dob" id="field"></td>
+            </tr>
+            <tr>
+                <td>Building Type</td>
+                <td><select name="building_type" id="field">
+                    <option value="apartment">Apartment</option>
+                    <option value="house">House</option>
+                    <option value="townhouse">Townhouse</option>
+                  </select></td>
+            </tr>
+            <tr>
+                <td>Features</td>
+                <td>
+                    <input type="checkbox" name="chk"> Heating
+                    <br/>
+                    <input type="checkbox" name="chk"> AirConditioning
+                    <br/>
+                    <input type="checkbox" name="chk"> Pool
+                    <br/>
+                    <input type="checkbox" name="chk"> SandPit
+                    <br/>
+                    <input type="button" onclick='selects()' value="Select All"/>  
+                    <br/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <input type="button" onclick='reset()' value="Reset"/>
+        <br/><br/>
+        <textarea rows = "6" cols = "34"></textarea>
+      </form>
+</body>
+</html>

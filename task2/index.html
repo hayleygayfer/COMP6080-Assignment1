@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 2</title>
+    <style type="text/css">
+        html {
+            background: repeating-linear-gradient(
+                90deg,
+                darkblue,
+                darkblue 40px,
+                lightblue 40px,
+                lightblue 80px
+            );
+        }
+
+        body {
+            margin: 0px;
+        }
+ 
+        .sqr_lrg {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 76px;
+            width: 76px;
+            margin-left: 40px;
+            padding: 2px;
+            position: fixed;
+            bottom: 0%;
+        }
+
+        .triangle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 76px;
+            width: 116px;
+            padding: 2px;
+        }
+
+        .sqr_row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sqr_sml {
+            background-color: pink;
+            height: 36px;
+            width: 36px;
+        }
+
+        .tri_sml  {
+            width: 0;
+            height: 0;
+            border-top: 100px red;
+            border-right: 100px solid transparent;
+        }
+
+        .tr_1 {
+            position: relative;
+            left: 320px;
+            bottom: 0px;
+        }
+
+        .tr_2 {
+            position: fixed;
+            left: 160px;
+            bottom: 240px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sqr_lrg">
+        <div class="sqr_row">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+        <div class="sqr_row">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="triangle tr_1">
+        <div class="sqr_row" style="justify-content: center;">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+        <div class="sqr_row">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="triangle tr_2">
+        <div class="sqr_row" style="justify-content: center;">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+        <div class="sqr_row">
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+            <div class="sqr_sml">
+                <div class="tri_sml"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
