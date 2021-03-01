@@ -108,7 +108,7 @@ The "output" refers to what the inner HTML text should be of the textarea at the
 * If they have entered the above correctly, the output is _"Your are [age (integer)] years old, and your address is [street name] St, [suburb], [postcode], Australia. Your building is [a|an] [building type], and it has [features]"_
   * If no features are selected, [features] is _"no features"_
   * If 1 feature is selected, [features] is just _"[feature1]"_
-  * If 2 or more feature are selected, [cities] is just _"[feature1], [feature2], and [feature3]"_ etc, where "and" joins the last and second last feature.
+  * If 2 or more feature are selected, [features] is just _"[feature1], [feature2], and [feature3]"_ etc, where "and" joins the last and second last feature.
 
 ## Analysing the pages
 
