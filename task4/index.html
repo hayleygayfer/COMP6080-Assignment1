@@ -7,73 +7,45 @@
             border: 0.5px solid black;
         }
     </style>
-    <script type="text/javascript">  
-        function selects() {  
-            var ele=document.getElementsByName('chk');  
-            for(var i=0; i<ele.length; i++){  
-                if(ele[i].type=='checkbox')  
-                    ele[i].checked=true;  
-            }  
-        }         
- 
-        function deSelect() {  
-                var ele=document.getElementsByName('chk');  
-                for(var i=0; i<ele.length; i++){  
-                    if(ele[i].type=='checkbox')  
-                        ele[i].checked=false;  
-                      
-                }  
-        }     
-
-        function reset() {
-            var ele=document.getElementsByName('field');
-            for(var i=0; i<ele.length; i++){
-                ele.value="";
-            }
-            deSelect()
-        }
-
-    </script>  
 </head>
 <body>
     <form method="post" action="fake_server">
         <table>
             <tr>
                 <td>Street Name</td>
-                <td><input type="text" name="street_name" id="field"></td>
+                <td><input type="text" name="field" id="street_name"></td>
             </tr>
             <tr>
                 <td>Suburb</td>
-                <td><input type="text" name="suburb" id="field"></td>
+                <td><input type="text" name="field" id="suburb"></td>
             </tr>
             <tr>    
                 <td>Postcode</td>
-                <td><input type="text" name="postcode" id="field"></td>
+                <td><input type="text" name="field" id="postcode"></td>
             </tr>
             <tr>
                 <td>Date of Birth</td>
-                <td><input type="text" name="dob" id="field"></td>
+                <td><input type="text" name="field" id="dob"></td>
             </tr>
             <tr>
                 <td>Building Type</td>
-                <td><select name="building_type" id="field">
+                <td><select name="field" id="building_type">
                     <option value="apartment">Apartment</option>
                     <option value="house">House</option>
-                    <option value="townhouse">Townhouse</option>
                   </select></td>
             </tr>
             <tr>
-                <td>Features</td>
+                <td name="features">Features</td>
                 <td>
-                    <input type="checkbox" name="chk"> Heating
+                    <input type="checkbox" name="chk" id="Heating"> Heating
                     <br/>
-                    <input type="checkbox" name="chk"> AirConditioning
+                    <input type="checkbox" name="chk" id="AirConditioning"> AirConditioning
                     <br/>
-                    <input type="checkbox" name="chk"> Pool
+                    <input type="checkbox" name="chk" id="Pool"> Pool
                     <br/>
-                    <input type="checkbox" name="chk"> SandPit
+                    <input type="checkbox" name="chk" id="SandPit"> SandPit
                     <br/>
-                    <input type="button" onclick='selects()' value="Select All"/>  
+                    <input type="button" id="select_btn" onclick='selects()' value="Select All"/>  
                     <br/>
                 </td>
             </tr>
@@ -81,7 +53,137 @@
         <br/>
         <input type="button" onclick='reset()' value="Reset"/>
         <br/><br/>
-        <textarea rows = "6" cols = "34"></textarea>
+        <textarea id="output" rows = "6" cols = "34"></textarea>
       </form>
 </body>
+<script type="text/javascript">  
+    let street_name = "[street_name]";
+    let suburb = "[suburb]";
+    let postcode = "[postcode]";
+    let dob = "";
+    let building_type = "[building_type]";
+
+    window.addEventListener('click', function(){
+        const output = document.getElementById("output");
+        if (validate_s(document.getElementById("street_name").value) === false) {
+            output.value = "Please input a valid street name";
+        } else if (validate_s(document.getElementById("suburb").value) === false) {
+            output.value = "Please input a valid suburb";
+        } else if (validate_post(document.getElementById('postcode').value) === false) {
+            output.value = "Please input a valid postcode";
+        } else if (validate_birth(document.getElementById('dob').value) === false) {
+            output.value = "Please input a valid Date of Birth";
+        } else {
+            street_name = document.getElementById('street_name').value;
+            suburb = document.getElementById('suburb').value;
+            postcode = document.getElementById('postcode').value;
+            dob = document.getElementById('dob').value;
+            building_type = document.getElementById('building_type').value;
+
+            let a_an = ""
+            if (building_type == "apartment") {
+                a_an = "an";
+            } else {
+                a_an = "a";
+            }
+
+            const checkboxes = document.getElementsByName('chk')
+            let features = "no features";
+
+            let last_feature = "";
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked === true) {
+                    if (features === "no features") {
+                        features = checkboxes[i].id;
+                    } else {
+                        features += `, ${checkboxes[i].id}`;
+                        last_feature = checkboxes[i].id;
+                    }
+                }
+            }
+
+            features = features.replace(`, ${last_feature}`, ` and ${last_feature}`);
+
+            let age = get_age(document.getElementById('dob').value);
+
+            output.value = `You are ${age} years old, and your address is ${street_name} St, ${suburb}, ${postcode}, Australia. Your building is ${a_an} ${building_type}, and it has ${features}`;
+        }
+    });
+
+    function get_age(dob) {
+        let age = 0;
+        let curDate = new Date();
+        let birthDate = new Date(dob);
+        age = curDate.getFullYear() - birthDate.getFullYear();            
+        let m = curDate.getMonth() - birthDate.getMonth();
+
+        if (m < 0 || (m === 0 && curDate.getDate() < birthDate.getDate())) {
+            age--;
+        }   
+        return age;     
+    }
+
+    function validate_s(string) {
+        if (string.length >= 50 || string.length <= 3) {
+            return false;
+        }
+        return true;
+    }   
+
+    function validate_post(postcode) {
+        let regExp = /[0-9]{4}/;
+        if (regExp.test(postcode)) {
+            return true;
+        }
+        return false;
+    }
+
+    function validate_birth(birth_d) {
+        let regExp = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/;
+        if (regExp.test(birth_d) && Date.parse(birth_d) !== NaN) {
+            return true;
+        }
+        return false;
+    }
+
+    function selects() {  
+        let ele = document.getElementsByName('chk');  
+
+        if (all_selected(ele) === true) {
+            deSelect();
+            document.getElementById("select_btn").value = "Select All";
+            return
+        }
+
+        for (let i = 0; i < ele.length; i++) {  
+            if(ele[i].type === 'checkbox')  
+                ele[i].checked = true;  
+        }  
+        document.getElementById("select_btn").value = "Deselect All";
+    }    
+    
+    function all_selected(ele) {
+        for (let i = 0; i < ele.length; i++) {
+            if(ele[i].type === 'checkbox' && ele[i].checked === false)
+                return false;
+        }
+        return true;
+    }
+
+    function deSelect() {  
+            let ele = document.getElementsByName('chk');  
+            for(let i = 0; i < ele.length; i++){  
+                if(ele[i].type == 'checkbox')  
+                    ele[i].checked = false;  
+            }  
+    }     
+
+    function reset() {
+        let ele = document.getElementsByName('field');
+        for(let i = 0; i < ele.length; i++){
+            ele.value = "";
+        }
+        deSelect();
+    }
+</script>  
 </html>
